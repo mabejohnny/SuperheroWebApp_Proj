@@ -43,8 +43,8 @@ namespace SuperheroWebApp.Controllers
         {
             try
             {
-                _db.Superheroes.Add(superhero);
-                _db.SaveChanges();
+                db.Superheroes.Add(superhero);
+                db.SaveChanges();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -63,10 +63,14 @@ namespace SuperheroWebApp.Controllers
         // POST: SuperheroController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Superhero superhero)
         {
             try
             {
+                var superheroToEdit = db.Superheroes.Where(c => c.Id == id).SingleOrDefault();
+                superheroToEdit.FirstName = "Joe";
+                db.SaveChanges();
+
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -84,10 +88,13 @@ namespace SuperheroWebApp.Controllers
         // POST: SuperheroController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Superhero superhero)
         {
             try
             {
+                db.Superheroes.Remove(superhero);
+                db.SaveChanges();
+
                 return RedirectToAction(nameof(Index));
             }
             catch

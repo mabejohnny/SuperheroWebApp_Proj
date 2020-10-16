@@ -11,15 +11,16 @@ namespace SuperheroWebApp.Controllers
 {
     public class SuperheroController : Controller
     {
-        private ApplicationDbContext _db;
-        public SuperheroController(ApplicationDbContext db)
+        private readonly ApplicationDbContext db;
+        public SuperheroController(ApplicationDbContext _db)
         {
-            _db = db;
+            db = _db;
         }
         // GET: SuperheroController
         public ActionResult Index()
         {
-            return View();
+            var superherosInDatabase = db.Superheroes.ToList();
+            return View(superherosInDatabase);
         }
 
         // GET: SuperheroController/Details/5
@@ -47,7 +48,7 @@ namespace SuperheroWebApp.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception e)
             {
                 return View();
             }

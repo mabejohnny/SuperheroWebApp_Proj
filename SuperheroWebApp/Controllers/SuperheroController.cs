@@ -63,12 +63,12 @@ namespace SuperheroWebApp.Controllers
         // POST: SuperheroController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Superhero superhero)
+        public ActionResult Edit(Superhero superhero)
         {
             try
             {
-                var superheroToEdit = db.Superheroes.Where(c => c.Id == id).SingleOrDefault();
-                superheroToEdit.FirstName = "Joe";
+                var superheroToEdit = 
+                
                 db.SaveChanges();
 
                 return RedirectToAction(nameof(Index));
@@ -88,11 +88,12 @@ namespace SuperheroWebApp.Controllers
         // POST: SuperheroController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Superhero superhero)
+        public ActionResult Delete(int id, Superhero superhero)
         {
             try
             {
-                db.Superheroes.Remove(superhero);
+                var herotoDelete = db.Superheroes.Where(c => c.Id == id).SingleOrDefault();
+                db.Superheroes.Remove(herotoDelete);
                 db.SaveChanges();
 
                 return RedirectToAction(nameof(Index));

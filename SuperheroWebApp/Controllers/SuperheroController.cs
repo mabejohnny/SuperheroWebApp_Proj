@@ -69,7 +69,6 @@ namespace SuperheroWebApp.Controllers
         {
             try
             {
-
                 db.Superheros.Update(superhero); 
                 db.SaveChanges();
 
@@ -95,7 +94,6 @@ namespace SuperheroWebApp.Controllers
         {
             try
             {
-                //var herotoDelete = db.Superheros.Where(c => c.Id == id).SingleOrDefault();
                 db.Superheros.Remove(superhero);
                 db.SaveChanges();
 

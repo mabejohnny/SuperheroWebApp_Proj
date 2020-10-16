@@ -26,7 +26,8 @@ namespace SuperheroWebApp.Controllers
         // GET: SuperheroController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var heroToView = db.Superheroes.Where(c => c.Id == id).SingleOrDefault();
+            return View(heroToView);
         }
 
         // GET: SuperheroController/Create
@@ -63,11 +64,11 @@ namespace SuperheroWebApp.Controllers
         // POST: SuperheroController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Superhero superhero)
+        public ActionResult Edit(int id, Superhero superhero)
         {
             try
             {
-                var superheroToEdit = 
+                
                 
                 db.SaveChanges();
 

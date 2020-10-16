@@ -4,12 +4,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SuperheroWebApp.Data;
 using SuperheroWebApp.Models;
 
 namespace SuperheroWebApp.Controllers
 {
     public class SuperheroController : Controller
     {
+        private ApplicationDbContext _db;
+        public SuperheroController(ApplicationDbContext db)
+        {
+            _db = db;
+        }
         // GET: SuperheroController
         public ActionResult Index()
         {
@@ -36,6 +42,9 @@ namespace SuperheroWebApp.Controllers
         {
             try
             {
+                _db.Superheroes.Add(superhero);
+                _db.SaveChanges();
+
                 return RedirectToAction(nameof(Index));
             }
             catch

@@ -19,14 +19,14 @@ namespace SuperheroWebApp.Controllers
         // GET: SuperheroController
         public ActionResult Index()
         {
-            var superherosInDatabase = db.Superheroes.ToList();
+            var superherosInDatabase = db.Superheros;
             return View(superherosInDatabase);
         }
 
         // GET: SuperheroController/Details/5
         public ActionResult Details(int id)
         {
-            var heroToView = db.Superheroes.Where(c => c.Id == id).SingleOrDefault();
+            var heroToView = db.Superheros.Where(c => c.Id == id).SingleOrDefault();
             return View(heroToView);
         }
 
@@ -44,7 +44,7 @@ namespace SuperheroWebApp.Controllers
         {
             try
             {
-                db.Superheroes.Add(superhero);
+                db.Superheros.Add(superhero);
                 db.SaveChanges();
 
                 return RedirectToAction(nameof(Index));
@@ -58,7 +58,8 @@ namespace SuperheroWebApp.Controllers
         // GET: SuperheroController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var superheroToEdit = db.Superheros.Where(c => c.Id == id).SingleOrDefault();
+            return View(superheroToEdit);
         }
 
         // POST: SuperheroController/Edit/5
@@ -68,8 +69,8 @@ namespace SuperheroWebApp.Controllers
         {
             try
             {
-                
-                
+
+                db.Superheros.Update(superhero); 
                 db.SaveChanges();
 
                 return RedirectToAction(nameof(Index));
@@ -83,23 +84,24 @@ namespace SuperheroWebApp.Controllers
         // GET: SuperheroController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var herotoDelete = db.Superheros.Where(c => c.Id == id).SingleOrDefault();
+            return View(herotoDelete);
         }
 
         // POST: SuperheroController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, Superhero superhero)
+        public ActionResult Delete(Superhero superhero)
         {
             try
             {
-                var herotoDelete = db.Superheroes.Where(c => c.Id == id).SingleOrDefault();
-                db.Superheroes.Remove(herotoDelete);
+                //var herotoDelete = db.Superheros.Where(c => c.Id == id).SingleOrDefault();
+                db.Superheros.Remove(superhero);
                 db.SaveChanges();
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception e)
             {
                 return View();
             }
